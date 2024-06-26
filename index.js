@@ -17,43 +17,22 @@ app.use(bodyParser.json());
 // Configuración de Multer para manejar la carga de archivos CSV
 const upload = multer({ dest: 'uploads/' });
 
-app.post('/cargar-csv', upload.single('csvFile'), async (req, res) => {
-  let csvData;
-
-  if (req.file) {
-    // Si se subió un archivo, leerlo desde el sistema de archivos
-    csvData = fs.readFileSync(req.file.path, 'utf8');
-    fs.unlinkSync(req.file.path); // Eliminar el archivo temporal
-  } else {
-    // Si no se subió un archivo, descargar desde la URL especificada
-    const csvUrl = 'https://datos.cdmx.gob.mx/dataset/cfa343cb-bd82-47af-83a0-bdaeb9da750e/resource/ed0a7cd3-2ed7-4cc6-b318-10471a0796f6/download/censo2020_pob_edades_localidad.csv';
-    try {
-      const response = await axios.get(csvUrl);
-      csvData = response.data;
-    } catch (error) {
-      console.error('Error al cargar el archivo CSV desde la URL:', error);
-      return res.status(500).json({ error: 'Error interno del servidor' });
-    }
+app.post('/cargar-csv', upload.none(), async (req, res) => {
+  console.log('Datos recibidos del cliente:', req.body);
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ error: 'No se han enviado datos.' });
   }
 
+  const results = req.body;
+
   try {
-    const results = [];
-    await new Promise((resolve, reject) => {
-      // Parsear el CSV y almacenar los resultados en un array
-      csvData
-        .pipe(csv())
-        .on('data', (row) => results.push(row))
-        .on('end', () => {
-          const query = 'INSERT INTO tu_tabla (nombre, nivel, turno, sostenimiento, domicilio, ubicacion, colonia, alcaldia, latitud, longitud) VALUES ?';
-          connection.query(query, [results.map(obj => Object.values(obj))], (error, results) => {
-            if (error) {
-              console.error('Error al insertar datos:', error);
-              return res.status(500).json({ error: 'Error interno del servidor' });
-            }
-            res.json({ message: 'Datos cargados correctamente', data: results });
-          });
-        })
-        .on('error', reject);
+    const query = 'INSERT INTO tu_tabla (nombre, nivel, turno, sostenimiento, domicilio, ubicacion, colonia, alcaldia, latitud, longitud) VALUES ?';
+    connection.query(query, [results.map(obj => Object.values(obj))], (error, results) => {
+      if (error) {
+        console.error('Error al insertar datos:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+      }
+      res.json({ message: 'Datos cargados correctamente', data: results });
     });
   } catch (error) {
     console.error('Error al procesar el archivo CSV:', error);
