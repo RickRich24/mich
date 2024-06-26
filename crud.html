@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Escuelas Públicas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Escuelas Públicas</h1>
+
+    <!-- Formulario para agregar una nueva escuela -->
+    <form id="addForm">
+      <h2>Añadir Nueva Escuela</h2>
+      <label>Nombre: <input type="text" id="nombre" required></label>
+      <label>Nivel: <input type="text" id="nivel" required></label>
+      <label>Turno: <input type="text" id="turno" required></label>
+      <label>Sostenimiento: <input type="text" id="sostenimiento" required></label>
+      <label>Domicilio: <input type="text" id="domicilio" required></label>
+      <label>Ubicación: <input type="text" id="ubicacion" required></label>
+      <label>Colonia: <input type="text" id="colonia" required></label>
+      <label>Alcaldía: <input type="text" id="alcaldia" required></label>
+      <label>Latitud: <input type="text" id="latitud" required></label>
+      <label>Longitud: <input type="text" id="longitud" required></label>
+      <button type="submit">Añadir</button>
+    </form>
+
+    <!-- Sección para mostrar y gestionar las escuelas -->
+    <div id="dataSection">
+      <h2>Escuelas Existentes</h2>
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Nivel</th>
+            <th>Turno</th>
+            <th>Sostenimiento</th>
+            <th>Domicilio</th>
+            <th>Ubicación</th>
+            <th>Colonia</th>
+            <th>Alcaldía</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="crud.js"></script>
+</body>
+</html>

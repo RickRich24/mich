@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gráfica de Escuelas Públicas por Alcaldía</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #chartdiv {
+      width: 100%;
+      height: 500px;
+      max-width: 800px;
+      margin: 20px 0;
+    }
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .description {
+      max-width: 800px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+  <h1>Gráfica de Escuelas Públicas por Alcaldía</h1>
+  <div class="description">
+    Esta gráfica circular muestra la distribución de las escuelas públicas en diferentes alcaldías. 
+    Cada sección del círculo representa una alcaldía y el tamaño de cada sección es proporcional 
+    al número de escuelas en dicha alcaldía.
+  </div>
+  <div id="chartdiv"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Papa.parse('ruta/al/archivo.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+          const data = results.data;
+          const processedData = processData(data);
+          createChart(processedData);
+        }
+      });
+    });
+
+    function processData(data) {
+      const alcaldiaCount = data.reduce((acc, row) => {
+        const alcaldia = row.alcaldia;
+        if (acc[alcaldia]) {
+          acc[alcaldia]++;
+        } else {
+          acc[alcaldia] = 1;
+        }
+        return acc;
+      }, {});
+
+      return Object.keys(alcaldiaCount).map(alcaldia => {
+        return {
+          alcaldia: alcaldia,
+          escuelas: alcaldiaCount[alcaldia]
+        };
+      });
+    }
+
+    function createChart(data) {
+      am5.ready(function() {
+        // Crear elemento root
+        var root = am5.Root.new("chartdiv");
+
+        // Establecer temas
+        root.setThemes([ am5themes_Animated.new(root) ]);
+
+        // Crear el gráfico
+        var chart = root.container.children.push(am5percent.PieChart.new(root, {
+          layout: root.verticalLayout,
+          radius: am5.percent(100)
+        }));
+
+        // Crear la serie
+        var series = chart.series.push(am5percent.PieSeries.new(root, {
+          valueField: "escuelas",
+          categoryField: "alcaldia",
+          alignLabels: true,
+          innerRadius: am5.percent(50)
+        }));
+
+        // Configurar datos de la serie
+        series.data.setAll(data);
+
+        // Animación de aparición
+        series.appear(1000, 100);
+      });
+    }
+  </script>
+</body>
+</html>

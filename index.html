@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto - Carga de Archivos CSV y Visualización de Datos</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .file-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      background: #e0e0e0;
+      padding: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .file-label input {
+      display: none;
+    }
+    .btn {
+      padding: 0.75rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    #message {
+      margin-top: 1rem;
+      color: #333;
+    }
+    #dataSection {
+      margin-top: 2rem;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Carga de Archivos CSV y Visualización de Datos</h1>
+    
+    <!-- Formulario para carga de archivos -->
+    <form id="uploadForm" enctype="multipart/form-data">
+      <label for="csvFile" class="file-label">
+        <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
+        Seleccionar Archivo CSV
+      </label>
+      <button type="submit" class="btn">Cargar Archivo CSV</button>
+    </form>
+    
+    <!-- Sección para mostrar los mensajes de estado -->
+    <div id="message"></div>
+
+    <!-- Sección para mostrar los datos -->
+    <div id="dataSection">
+      <!-- Aquí se mostrarán los datos cargados o los gráficos -->
+    </div>
+
+    <!-- Botones para redirigir -->
+    <div class="button-group">
+      <button class="btn" onclick="location.href='/crud'">Ir a Gestión de Datos</button>
+      <button class="btn" id="showGraphBtn">Mostrar Gráfica</button>
+    </div>
+  </div>
+
+  <!-- Incluye la biblioteca de AmCharts -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <!-- Script JavaScript para manejar la carga de archivos y la interacción con la API -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
