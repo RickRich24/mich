@@ -17,7 +17,6 @@ app.use(bodyParser.json());
 // Configuración de Multer para manejar la carga de archivos CSV
 const upload = multer({ dest: 'uploads/' });
 
-// Ruta para cargar archivos CSV desde el formulario o una URL
 app.post('/cargar-csv', upload.single('csvFile'), async (req, res) => {
   let csvData;
 
@@ -40,7 +39,8 @@ app.post('/cargar-csv', upload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
     await new Promise((resolve, reject) => {
-      const csvStream = csvData
+      // Parsear el CSV y almacenar los resultados en un array
+      csvData
         .pipe(csv())
         .on('data', (row) => results.push(row))
         .on('end', () => {
