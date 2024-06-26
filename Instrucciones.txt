@@ -1,6 +1,0 @@
-Para subir tu proyecto a un host
-crea una cuenta de GitHub
-Y busca un host o un servidor que permita subir tu proyecto de GitHub, asi pídeselo a chatgpt
-Ahora busca como subir tu carpeta desde tu powershell a un directorio de GitHub
-y te va dar los comandos para subirlo, tu carpeta se llama "mich", ya tiene todos los archivos para poder subirlo a la red, ya no es necesario que lo hagas en local
-Tambien trata de editar los archivos HTMLs solo los HTMLs para que diga la profa que es distinto 
