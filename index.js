@@ -1,9 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const csv = require('csv-parser');
-const axios = require('axios');
-const fs = require('fs');
 const path = require('path');
 const connection = require('./db');
 
@@ -43,17 +40,15 @@ app.post('/cargar-csv', upload.none(), async (req, res) => {
 // Middleware para servir archivos estáticos desde el directorio 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para servir la página principal
+// Rutas para servir las páginas
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Ruta para servir la página de gestión de datos (crud.html)
 app.get('/crud', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'crud.html'));
 });
 
-// Ruta para servir la página de gráfica (grafica.html)
 app.get('/grafica', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'grafica.html'));
 });
