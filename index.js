@@ -21,6 +21,7 @@ app.post('/cargar-csv', upload.none(), async (req, res) => {
   }
 
   const results = req.body;
+  console.log('Datos procesados:', results);
 
   try {
     const query = 'INSERT INTO tu_tabla (nombre, nivel, turno, sostenimiento, domicilio, ubicacion, colonia, alcaldia, latitud, longitud) VALUES ?';
