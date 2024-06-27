@@ -13,8 +13,8 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
         localStorage.setItem('csvData', JSON.stringify(results.data));
         document.getElementById('message').innerText = 'Archivo cargado correctamente.';
 
-        // Enviar datos al servidor
-        fetch('/cargar-csv', {
+        // Enviar datos a la función de Netlify
+        fetch('/api/cargar-csv', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
